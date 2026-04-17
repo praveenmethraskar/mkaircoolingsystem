@@ -965,6 +965,7 @@ img {
 .handle-preloader .animation-preloader .txt-loading .letters-loading:nth-child(8):before {
   animation-delay: 1.5s;
 }
+
 .handle-preloader .animation-preloader .txt-loading .letters-loading:nth-child(9):before {
   animation-delay: 1.8s;
 }
@@ -3725,7 +3726,7 @@ Main Slider Two
   border: 1px solid rgba(255, 255, 255, 0.4);
   border-radius: 50%;
   counter-increment: count;
-  content: ""counter(count);
+  content: "" counter(count);
   font-family: var(--alori-font);
   -webkit-transition: all 200ms linear;
   transition: all 200ms linear;
@@ -3992,7 +3993,7 @@ Main Slider Three
   position: relative;
   display: block;
   background: #ffffff;
-  padding: 120px 0px 120px;
+  padding: 50px 0px 0px;
   z-index: 1;
 }
 
@@ -4136,6 +4137,7 @@ Main Slider Three
   position: relative;
   display: block;
   margin-right: 50px;
+  text-align: justify;
 }
 
 .about-one__content-text1 .text-box p {
@@ -8092,7 +8094,7 @@ Services Two
   left: 0;
   bottom: 0;
   right: 0;
-  background: #27186B;
+  background: #27186bf7;
   opacity: 0.9;
   content: "";
   z-index: -2;
@@ -9280,7 +9282,7 @@ Contact One
 .contact-one {
   position: relative;
   display: block;
-  padding: 110px 0px 120px;
+  padding: 110px 0px 0px;
   z-index: 1;
 }
 
@@ -15342,7 +15344,7 @@ Gallery One Project One
 .gallery-one--project1 {
   position: relative;
   display: block;
-  background: #ffffff;
+  background: #0192e1;
   padding: 120px 0px 90px;
 }
 

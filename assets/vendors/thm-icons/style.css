@@ -52,6 +52,10 @@
   content: "\e905";
 }
 
+.icon-youtube:before {
+  content: "\f16a"; /* example – actual code will be generated */
+}
+
 .icon-plus:before {
   content: "\e906";
 }

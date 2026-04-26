@@ -333,7 +333,7 @@ li {
   color: #ffffff;
   font-size: 19px;
   font-weight: 600;
-  background: var(--thm-base);
+  background: #352872;
   overflow: hidden;
   font-family: var(--thm-font);
   text-transform: capitalize;
@@ -1230,7 +1230,7 @@ animation: spinner 1s infinite linear;
   background: #ffffff;
 }
 
-.xs-sidebar-group .content-inner .form-inner .form-group.message-btn .thm-btn:hover .txt {
+.xs-sidebar-group .content-inner .form-inner .form-group.message-btn .txt {
   color: var(--thm-black);
 }
 

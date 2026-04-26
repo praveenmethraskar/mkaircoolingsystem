@@ -190,7 +190,7 @@
                                                     </a>
 
                                                     <ul class="main-menu__list">
-                                                        <li >
+                                                        <li>
                                                             <a href="index.html">Home</a>
                                                         </li>
 
@@ -363,8 +363,7 @@
                         <!--Start Contact One Form-->
                         <div class="col-xl-7">
                             <div class="contact-one__form contact-one__form--contact">
-                                <form id="contact-form" name="contact_form" class="default-form2"
-                                    action="https://weblayout.mnsithub.com/html/webplateone/lsicool/assets/inc/sendmail.php"
+                                <form id="contact-form" name="contact_form" class="default-form2" action="sendmail.php"
                                     method="post">
                                     <div class="row">
                                         <div class="col-xl-6 col-lg-6 col-md-6">
@@ -552,18 +551,6 @@
         </div>
     </div>
 
-    <div class="search-popup">
-        <div class="search-popup__overlay search-toggler"></div>
-        <div class="search-popup__content">
-            <form action="#">
-                <label for="search" class="sr-only">search here</label>
-                <input type="text" id="search" placeholder="Search Here..." />
-                <button type="submit" aria-label="search submit" class="thm-btn">
-                    <i class="icon-search-interface-symbol"></i>
-                </button>
-            </form>
-        </div>
-    </div>
 
     <a href="#" data-target="html" class="scroll-to-target scroll-to-top">
         <i class="icon-chevron"></i>
@@ -610,6 +597,82 @@
 
     <!-- Template js -->
     <script src="assets/js/custom.js"></script>
+    <script>
+        document.getElementById("contact-form").addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const submitBtn = document.querySelector("#contact-form button[type='submit']");
+            submitBtn.disabled = true;
+            submitBtn.innerText = "Sending...";
+
+            let formData = new FormData(this);
+
+            fetch("sendmail.php", {
+                method: "POST",
+                body: formData
+            })
+                .then(async (res) => {
+                    const ct = res.headers.get("content-type") || "";
+                    let data;
+
+                    if (ct.includes("application/json")) {
+                        data = await res.json();
+                    } else {
+                        const text = await res.text();
+                        return Promise.reject({ type: "non-json", text });
+                    }
+
+                    if (!res.ok) {
+                        return Promise.reject({ type: "json-error", data });
+                    }
+
+                    return data;
+                })
+                .then(data => {
+                    showPopup(data.status, data.message);
+
+                    if (data.status === "success") {
+                        document.getElementById("contact-form").reset();
+                    }
+                })
+                .catch(err => {
+                    if (err?.type === "non-json") {
+                        showPopup("error", "Server error (non-JSON response)");
+                        console.error("Server response:", err.text);
+                    } else if (err?.type === "json-error") {
+                        showPopup("error", err.data.message || "Server error");
+                        console.error("Server error:", err.data);
+                    } else {
+                        showPopup("error", "Something went wrong!");
+                        console.error("Fetch error:", err);
+                    }
+                })
+                .finally(() => {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = "Send a Message";
+                });
+        });
+
+        // Popup
+        function showPopup(type, message) {
+            const popup = document.getElementById("popupBox");
+            const icon = document.getElementById("popupIcon");
+            const msg = document.getElementById("popupMessage");
+
+            if (type === "success") {
+                icon.innerHTML = "<div class='success-icon'>✔</div>";
+            } else {
+                icon.innerHTML = "<div class='error-icon'>✖</div>";
+            }
+
+            msg.innerText = message;
+            popup.style.display = "flex";
+        }
+
+        function closePopup() {
+            document.getElementById("popupBox").style.display = "none";
+        }
+    </script>
 
 </body>
 

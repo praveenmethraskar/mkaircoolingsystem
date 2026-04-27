@@ -217,8 +217,8 @@
           });
         }
       }, {
-        accY: 0
-      }
+      accY: 0
+    }
     );
   }
 
@@ -344,7 +344,7 @@
           elm.val(Math.ceil(this.value)).trigger('change');
         }
       });
-      $(this).append(function () {});
+      $(this).append(function () { });
     }, {
       accY: 20
     });
@@ -512,23 +512,46 @@
   if ($("#contact-form").length) {
     $("#contact-form").validate({
       submitHandler: function (form) {
+
         var form_btn = $(form).find('button[type="submit"]');
         var form_result_div = '#form-result';
+
         $(form_result_div).remove();
-        form_btn.before('<div id="form-result" class="alert alert-success" role="alert" style="display: none;"></div>');
+
+        form_btn.before('<div id="form-result" class="alert" style="display:none;"></div>');
+
         var form_btn_old_msg = form_btn.html();
-        form_btn.html(form_btn.prop('disabled', true).data("loading-text"));
+        form_btn.html("Sending...").prop('disabled', true);
+
         $(form).ajaxSubmit({
           dataType: 'json',
           success: function (data) {
-            if (data.status = 'true') {
-              $(form).find('.form-control').val('');
+
+            if (data.status === "success") {
+              $("#form-result")
+                .removeClass("alert-danger")
+                .addClass("alert-success")
+                .html(data.message)
+                .fadeIn();
+
+              form.reset();
+            } else {
+              $("#form-result")
+                .removeClass("alert-success")
+                .addClass("alert-danger")
+                .html(data.message)
+                .fadeIn();
             }
-            form_btn.prop('disabled', false).html(form_btn_old_msg);
-            $(form_result_div).html(data.message).fadeIn('slow');
-            setTimeout(function () {
-              $(form_result_div).fadeOut('slow')
-            }, 6000);
+
+            form_btn.html(form_btn_old_msg).prop('disabled', false);
+          },
+          error: function () {
+            $("#form-result")
+              .addClass("alert-danger")
+              .html("Something went wrong!")
+              .fadeIn();
+
+            form_btn.html(form_btn_old_msg).prop('disabled', false);
           }
         });
       }
@@ -766,8 +789,8 @@
         $("html, body")
           .stop()
           .animate({
-              scrollTop: $(target.attr("href")).offset().top - headerH + "px"
-            },
+            scrollTop: $(target.attr("href")).offset().top - headerH + "px"
+          },
             1200,
             "easeInOutExpo"
           );
@@ -877,8 +900,8 @@
       var target = $(this).attr("data-target");
       // animate
       $("html, body").animate({
-          scrollTop: $(target).offset().top
-        },
+        scrollTop: $(target).offset().top
+      },
         100
       );
 

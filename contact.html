@@ -209,9 +209,11 @@
                                                                 </li>
                                                                 <li><a href="ducting-service.html">Ducting Service</a>
                                                                 </li>
-                                                                <li><a href="bluestar-ductable-ac.html">Bluestar Ductable AC</a>
+                                                                <li><a href="bluestar-ductable-ac.html">Bluestar
+                                                                        Ductable AC</a>
                                                                 </li>
-                                                                <li><a href="fabrication-service.html">Fabrication Service</a>
+                                                                <li><a href="fabrication-service.html">Fabrication
+                                                                        Service</a>
                                                                 </li>
                                                             </ul>
                                                         </li>
@@ -596,6 +598,8 @@
     <script src="assets/vendors/jquery-circle-progress/jquery.circle-progress.min.js"></script>
     <script src="assets/vendors/progress-bar/knob.js"></script>
     <script src="assets/vendors/sidebar-content/jquery-sidebar-content.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script>
+    <script src="assets/vendors/jquery-form/jquery.form.min.js"></script>
 
     <!-- Template js -->
     <script src="assets/js/custom.js"></script>
@@ -603,77 +607,33 @@
         document.getElementById("contact-form").addEventListener("submit", function (e) {
             e.preventDefault();
 
-            const submitBtn = document.querySelector("#contact-form button[type='submit']");
-            submitBtn.disabled = true;
-            submitBtn.innerText = "Sending...";
+            let form = this;
+            let formData = new FormData(form);
+            let msg = document.getElementById("formMsg");
+            let btn = document.getElementById("submitBtn");
 
-            let formData = new FormData(this);
+            btn.disabled = true;
+            btn.innerText = "Sending...";
 
             fetch("sendmail.php", {
                 method: "POST",
                 body: formData
             })
-                .then(async (res) => {
-                    const ct = res.headers.get("content-type") || "";
-                    let data;
-
-                    if (ct.includes("application/json")) {
-                        data = await res.json();
-                    } else {
-                        const text = await res.text();
-                        return Promise.reject({ type: "non-json", text });
-                    }
-
-                    if (!res.ok) {
-                        return Promise.reject({ type: "json-error", data });
-                    }
-
-                    return data;
-                })
+                .then(res => res.text())
                 .then(data => {
-                    showPopup(data.status, data.message);
-
-                    if (data.status === "success") {
-                        document.getElementById("contact-form").reset();
-                    }
+                    msg.innerHTML = data;
+                    msg.style.color = "green";
+                    form.reset();
+                    btn.disabled = false;
+                    btn.innerText = "Send Message";
                 })
                 .catch(err => {
-                    if (err?.type === "non-json") {
-                        showPopup("error", "Server error (non-JSON response)");
-                        console.error("Server response:", err.text);
-                    } else if (err?.type === "json-error") {
-                        showPopup("error", err.data.message || "Server error");
-                        console.error("Server error:", err.data);
-                    } else {
-                        showPopup("error", "Something went wrong!");
-                        console.error("Fetch error:", err);
-                    }
-                })
-                .finally(() => {
-                    submitBtn.disabled = false;
-                    submitBtn.innerHTML = "Send a Message";
+                    msg.innerHTML = "Error sending message!";
+                    msg.style.color = "red";
+                    btn.disabled = false;
+                    btn.innerText = "Send Message";
                 });
         });
-
-        // Popup
-        function showPopup(type, message) {
-            const popup = document.getElementById("popupBox");
-            const icon = document.getElementById("popupIcon");
-            const msg = document.getElementById("popupMessage");
-
-            if (type === "success") {
-                icon.innerHTML = "<div class='success-icon'>✔</div>";
-            } else {
-                icon.innerHTML = "<div class='error-icon'>✖</div>";
-            }
-
-            msg.innerText = message;
-            popup.style.display = "flex";
-        }
-
-        function closePopup() {
-            document.getElementById("popupBox").style.display = "none";
-        }
     </script>
 
 </body>

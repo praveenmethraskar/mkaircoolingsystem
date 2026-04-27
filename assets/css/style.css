@@ -356,7 +356,7 @@ li {
   transform: translateX(-50%);
   border-radius: 50%;
   z-index: 1;
-  background: var(--thm-black);
+  background: #17293e9c;
 }
 
 .thm-btn:hover:before {

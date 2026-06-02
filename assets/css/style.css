@@ -6477,7 +6477,7 @@ Gallery One
   transition-timing-function: ease-in-out;
   transition-duration: .7s;
   transition-property: all;
-  background: rgba(var(--thm-black-rgb), 0.5);
+  /* background: rgba(var(--thm-black-rgb), 0.5); */
   opacity: 0;
   z-index: 1;
   content: "";

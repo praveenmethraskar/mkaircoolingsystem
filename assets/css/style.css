@@ -16511,3 +16511,23 @@ End Css
     justify-content: center;
     align-items: center;
 }
+
+.gallery-filter {
+    margin-bottom: 40px;
+}
+
+.gallery-filter .filter-btn {
+    border: none;
+    padding: 10px 24px;
+    margin: 5px;
+    border-radius: 30px;
+    background: #f5f5f5;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.gallery-filter .filter-btn.active,
+.gallery-filter .filter-btn:hover {
+    background: #0d6efd;
+    color: #fff;
+}

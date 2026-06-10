@@ -35,8 +35,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mail->SMTPSecure = 'tls';
         $mail->Port       = 587;
 
-        $mail->setFrom('praveenmethraskar@gmail.com', 'Website Contact');
-        $mail->addAddress('praveenmethraskar@gmail.com');
+        $mail->setFrom('mkaircoolingsystem@gmail.com', 'Website Contact');
+        $mail->addAddress('mkaircoolingsystem@gmail.com');
 
         $mail->isHTML(true);
         $mail->Subject = "New Contact: $subject";

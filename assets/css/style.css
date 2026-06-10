@@ -16484,8 +16484,8 @@ End Css
 
 
 .preloader-logo {
-  width: 280px;
-  max-width: 80%;
+  width: 300px;
+  max-width: 100%;
   height: auto;
 
   animation: zoomInOut 2s infinite ease-in-out;
